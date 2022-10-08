@@ -5,56 +5,303 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Picker"
         mc:Ignorable="d"
-        Title="Date Picker" Height="400" Width="400" ResizeMode="CanMinimize" Icon="/picker.ico">
-    <Window.Background>
-        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="#FFAB501C" Offset="0.974"/>
-            <GradientStop Color="#FFF7F913" Offset="0"/>
-        </LinearGradientBrush>
-    </Window.Background>
+        Title="Date Picker"
+        Height="600"
+        Width="600"
+        ResizeMode="CanMinimize"
+        Background="{DynamicResource WindowGradient}">
+    <Window.Resources>
+        <ResourceDictionary Source="PickerDictionary.xaml"/>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
+            <RowDefinition Height="0.5*"></RowDefinition>
             <RowDefinition></RowDefinition>
-
-
-
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="0.5*"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="0.5*"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="0.5*"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <Label Name="Datelabel" 
-               Grid.Row="0" 
-               HorizontalContentAlignment="Center" 
-               VerticalContentAlignment="Center"
-               FontSize="24"
-               Foreground="Red" FontWeight="Bold" FontFamily="Yu Gothic UI Semibold"
-               >Укажите необходимое время
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.2*"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="0.2*"></ColumnDefinition>
+
+
+        </Grid.ColumnDefinitions>
+        
+        <CheckBox x:Name="QCheck" 
+                  Grid.Row="0" 
+                  Grid.Column="0" 
+                  Style="{DynamicResource Check}"
+                  Checked="QCheck_Checked">
+            
+        </CheckBox>
+       
+        <Label x:Name="QuestionLabel"
+               Grid.Row="0"
+               Grid.Column="1"
+               Content="Вопрос"
+               Style="{StaticResource VioletTextBlock}">
+
         </Label>
-        <Canvas Grid.Row="1">
-            <Label HorizontalContentAlignment="Center" FontSize="18" Foreground="Red" Canvas.Left="52" Canvas.Bottom="8" FontWeight="Bold" HorizontalAlignment="Left" Canvas.Top="54" VerticalAlignment="Center" Width="89">Часы</Label>
-            <Label HorizontalContentAlignment="Center" FontSize="18" Foreground="Red" Canvas.Right="160" Canvas.Bottom="8" FontWeight="Bold" HorizontalAlignment="Left" Canvas.Left="151" Canvas.Top="54" VerticalAlignment="Center" Width="88">Минуты</Label>
-            <Label HorizontalContentAlignment="Center" FontSize="18" Foreground="Red" Canvas.Right="80" Canvas.Bottom="8" FontWeight="Bold" HorizontalAlignment="Left" Canvas.Left="252" Canvas.Top="54" VerticalAlignment="Center" Width="88">Секунды</Label>
-        </Canvas>
-        <StackPanel Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
-            <ComboBox x:Name="HourPick" Height="80" Width="100">
 
-            </ComboBox>
-            <ComboBox x:Name="MinPick" Height="80" Width="100" >
+        <TextBox x:Name="QuestionBox"
+                 Grid.Row="0"
+                 Grid.Column="2"
+                 Grid.ColumnSpan="2"
+                 Style="{DynamicResource TextBox}">
+            
+        </TextBox>
+        
+        <CheckBox x:Name="A1Check"
+                  Grid.Row="1"
+                  Grid.Column="0"
+                  Style="{DynamicResource Check}"
+                  Checked="A1Check_Checked">
+            
+        </CheckBox>
+        
+        <Label x:Name="Ans1Label"
+                   Grid.Row="1"
+                   Grid.Column="1"
+                   Content="Ответ 1"
+                   Style="{DynamicResource VioletTextBlock}">
 
-            </ComboBox>
-            <ComboBox x:Name="SecPick" Height="80" Width="100" >
+        </Label>
 
-            </ComboBox>
-        </StackPanel>
-        <Button Grid.Row="3"
-                x:Name="SaveBut"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Height="80"
-                Width="100"
-                Click="SaveBut_Click" Background="#FFF1E919" Foreground="#FFF50C0C" FontWeight="Bold" FontSize="16"
+        <TextBox x:Name="Ans1Box"
+                 Grid.Row="1"
+                 Grid.Column="2"
+                 Grid.ColumnSpan="2"
+                 Style="{DynamicResource TextBox}">
+            
+        </TextBox>
+
+        <CheckBox x:Name="A2Check"
+                  Grid.Row="2"
+                  Grid.Column="0"
+                  Style="{DynamicResource Check}"
+                  Checked="A2Check_Checked">
+            
+        </CheckBox>
+
+        <Label x:Name="Ans2Label"
+               Grid.Row="2"
+               Grid.Column="1"
+               Content="Ответ 2"
+               Style="{DynamicResource VioletTextBlock}">
+
+        </Label>
+
+        <TextBox x:Name="Ans2Box"
+                 Grid.Row="2"
+                 Grid.Column="2"
+                 Grid.ColumnSpan="2"
+                 Style="{DynamicResource TextBox}">
+            
+        </TextBox>
+        
+        <Label Name="DateStartLabel"
+               Grid.Row="4"
+               Grid.Column="2"
+               Content="Начало опроса"
+               Style="{DynamicResource VioletTextBlock}"
+               >
+        </Label>
+        <Label x:Name="HourLabel1"
+               Grid.Row="5"
+               Grid.Column="1"
+               Content="Часы"
+               Style="{DynamicResource BotVioletText}">
+            
+        </Label>
+        <Label x:Name="MinLabel1"
+               Grid.Row="5"
+               Grid.Column="2"
+               Content="Минуты"
+               Style="{DynamicResource BotVioletText}">
+            
+        </Label>
+        <Label x:Name="SecLabel1"
+               Grid.Row="5"
+               Grid.Column="3"
+               Content="Секунды"
+               Style="{DynamicResource BotVioletText}">
+            
+        </Label>
+
+        <CheckBox x:Name="DstartCheck"
+                  Grid.Row="6"
+                  Grid.Column="0"
+                  Style="{DynamicResource Check}"
+                  Checked="DstartCheck_Checked">
+            
+        </CheckBox>
+
+        <ComboBox x:Name="HourPickBox1"
+                  Grid.Row="6"
+                  Grid.Column="1"
+                  Style="{DynamicResource MyComboBox}"
+                  ItemTemplate="{DynamicResource Item}">
+
+
+        </ComboBox>
+
+        <ComboBox x:Name="MinPickBox1"
+                  Grid.Row="6"
+                  Grid.Column="2"
+                  Style="{DynamicResource MyComboBox}"
+                  ItemTemplate="{DynamicResource Item}">
+
+        </ComboBox>
+        
+        <ComboBox x:Name="SecPickBox1"
+                  Grid.Row="6"
+                  Grid.Column="3"
+                  Style="{DynamicResource MyComboBox}"
+                  ItemTemplate="{DynamicResource Item}">
+
+        </ComboBox>
+
+        <Label x:Name="DateStopLabel"
+               Grid.Row="8"
+               Grid.Column="2"
+               Content="Конец опроса"
+               Style="{DynamicResource VioletTextBlock}">
+
+        </Label>
+        
+        <Label x:Name="HourLabel2"
+               Grid.Row="9"
+               Grid.Column="1"
+               Content="Часы"
+               Style="{DynamicResource BotVioletText}">
+
+        </Label>
+        <Label x:Name="MinLabel2"
+               Grid.Row="9"
+               Grid.Column="2"
+               Content="Минуты"
+               Style="{DynamicResource BotVioletText}">
+
+        </Label>
+        <Label x:Name="SecLabel2"
+               Grid.Row="9"
+               Grid.Column="3"
+               Content="Секунды"
+               Style="{DynamicResource BotVioletText}">
+
+        </Label>
+
+        <CheckBox x:Name="DstopCheck"
+                  Grid.Row="10"
+                  Grid.Column="0"
+                  Style="{DynamicResource Check}"
+                  Checked="DstopCheck_Checked">
+            
+        </CheckBox>
+        
+        <ComboBox x:Name="HourPick2Box"
+                  Grid.Row="10"
+                  Grid.Column="1"
+                  Style="{DynamicResource MyComboBox}"
+                  ItemTemplate="{DynamicResource Item}">
+
+        </ComboBox>
+        
+        <ComboBox x:Name="MinPickBox2"
+                  Grid.Row="10"
+                  Grid.Column="2"
+                  Style="{DynamicResource MyComboBox}"
+                  ItemTemplate="{DynamicResource Item}">
+
+        </ComboBox>
+        
+        <ComboBox x:Name="SecPickBox2"
+                  Grid.Row="10"
+                  Grid.Column="3"
+                  Style="{DynamicResource MyComboBox}"
+                  ItemTemplate="{DynamicResource Item}">
+
+        </ComboBox>
+
+        <CheckBox x:Name="P1Check"
+                  Grid.Row="12"
+                  Grid.Column="0"
+                  Style="{DynamicResource Check}"
+                  Checked="P1Check_Checked">
+            
+        </CheckBox>
+        
+        <Label x:Name="Phone1Label"
+               Grid.Row="12"
+               Grid.Column="1"
+               Content="Номер 1"
+               Style="{DynamicResource VioletTextBlock}">
+            
+        </Label>
+        <TextBox x:Name="Phone1Box"
+                  Grid.Row="12"
+                  Grid.Column="2"
+                  Grid.ColumnSpan="2"
+                 Style="{DynamicResource TextBox}">
+            
+        </TextBox>
+
+        <CheckBox x:Name="P2Check"
+                  Grid.Row="13"
+                  Grid.Column="0"
+                  Style="{DynamicResource Check}"
+                  Checked="P2Check_Checked">
+            
+        </CheckBox>
+        
+        <Label x:Name="Phone2Label"
+               Grid.Row="13"
+               Grid.Column="1"
+               Content="Номер 2"
+               Style="{DynamicResource VioletTextBlock}">
+
+        </Label>
+        <TextBox x:Name="Phone2Box"
+                 Grid.Row="13"
+                 Grid.Column="2"
+                 Grid.ColumnSpan="2"
+                 Style="{DynamicResource TextBox}">
+
+        </TextBox>
+
+
+        <Button x:Name="SaveBut"
+                Grid.Row="15"
+                Grid.Column="2"
+                Click="SaveBut_Click"
+                Style="{DynamicResource MyRoudedBut}" 
                 >Сохранить
         </Button>
+
+        <StackPanel Grid.Row="16"
+                    Grid.Column="1"
+                    Style="{DynamicResource StackStyle}">
+            <Image x:Name="TestConnBut" MouseLeftButtonUp="TestConnBut_MouseLeftButtonUp" >
+
+            </Image>
+
+        </StackPanel>
 
     </Grid>
 </Window>
