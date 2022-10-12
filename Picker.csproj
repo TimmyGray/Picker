@@ -40,6 +40,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\libs\Pickerlib\Pickerlib.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="button green.png" />
     <Resource Include="picker.ico" />
   </ItemGroup>
@@ -67,12 +71,6 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Pickerlib">
-      <HintPath>..\libs\Pickerlib\bin\Release\net6.0-windows7.0\Pickerlib.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>

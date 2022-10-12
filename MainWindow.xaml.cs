@@ -14,10 +14,11 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.EntityFrameworkCore;
 using Pickerlib;
-
+using Picker.Classes;
 using Pickerlib.Models;
 using Pickerlib.Contexts;
 using Pickerlib.Models.Classes;
+using System.Reflection;
 
 namespace Picker
 {
@@ -28,35 +29,41 @@ namespace Picker
     {
         ClockContext<ITimeItem> data;
 
-        private BitmapImage SetSource(bool connection)
+        
+
+        private string SetFieldValue(bool? check, TextBox element)
+        {
+            
+            if (check==true)
+            {
+
+                return element.Text;
+               
+                        
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        private  ITimeItem SetFieldValue(bool? check, ComboBox element)
         {
 
-            BitmapImage bitmap = new BitmapImage();
-            bitmap.BeginInit();
-           
-
-            if (connection)
+            if (check == true)
             {
-                string uri = System.IO.Path.Combine(
-                                            Directory.GetCurrentDirectory(),
-                                            "Resources/button green.png");
-                bitmap.UriSource = new Uri(uri);
+
+                return (ITimeItem)element.SelectedItem;
+
 
             }
             else
             {
-                string uri = System.IO.Path.Combine(
-                                            Directory.GetCurrentDirectory(),
-                                            "Resources/button red.png");
-                bitmap.UriSource = new Uri(uri);
-
-                MessageBox.Show("Подключения нет");
+                return null;
             }
-
-            bitmap.EndInit();
-            return bitmap;
         }
-        
+
+
         public MainWindow()
         {
 
@@ -70,110 +77,176 @@ namespace Picker
             MinPickBox2.ItemsSource = data.Minitems;
             SecPickBox2.ItemsSource = data.Secitems;
 
-
-            using (VoteContext db = new VoteContext())
-            {
-                bool conn = db.CheckConn();
-
-                TestConnBut.Source = SetSource(conn);
-            }
+            TestConnBut.Source = ElementsAction.SetSource(SaveDataContext.CheckConn());
+            
          
         }
 
         private void SaveBut_Click(object sender, RoutedEventArgs e)
         {
-            string question = QuestionBox.Text;
-            string answer1 = Ans1Box.Text;
-            string answer2 = Ans2Box.Text;
-            string phone1 = Phone1Box.Text;
-            string phone2 = Phone2Box.Text;
-            ITimeItem hour1 = (ITimeItem)HourPickBox1.SelectedItem;
-            ITimeItem min1 = (ITimeItem)MinPickBox1.SelectedItem;
-            ITimeItem sec1 = (ITimeItem)SecPickBox1.SelectedItem;
-            ITimeItem hour2 = (ITimeItem)HourPick2Box.SelectedItem;
-            ITimeItem min2 = (ITimeItem)MinPickBox2.SelectedItem;
-            ITimeItem sec2 = (ITimeItem)SecPickBox2.SelectedItem;
+            string question = SetFieldValue(QCheck.IsChecked,QuestionBox);
+            string answer1 = SetFieldValue(A1Check.IsChecked,Ans1Box);
+            string answer2 = SetFieldValue(A2Check.IsChecked,Ans2Box);
+            string phone1 = SetFieldValue(P1Check.IsChecked,Phone1Box);
+            string phone2 = SetFieldValue(P2Check.IsChecked,Phone2Box);
 
-            if (hour1!=null&&min1!=null&&sec1!=null&& hour2 != null && min2 != null && sec2 != null)
+            if (DstartCheck.IsChecked == false      //question
+                && DstopCheck.IsChecked == false
+                && QCheck.IsChecked == true
+                && A1Check.IsChecked == false
+                && A2Check.IsChecked == false
+                && P1Check.IsChecked == false
+                && P2Check.IsChecked == false)
             {
-                try
+
+                string result = SaveDataContext.SaveData(question);
+                MessageBox.Show(result);
+                return;
+
+            }
+
+            
+
+            if (DstartCheck.IsChecked == false //question+ans1+ans2
+                && DstopCheck.IsChecked == false
+                && QCheck.IsChecked == true
+                && A1Check.IsChecked == true
+                && A2Check.IsChecked == true
+                && P1Check.IsChecked == false
+                && P2Check.IsChecked == false)
+            {
+                string result = SaveDataContext.SaveData(question, answer1, answer2);
+                MessageBox.Show(result);
+            }
+
+            if (QCheck.IsChecked == true        //save dates
+                && A1Check.IsChecked == false
+                && A2Check.IsChecked == false
+                && P1Check.IsChecked == false
+                && P2Check.IsChecked == false)
+            {
+                if (DstartCheck.IsChecked==true&&DstopCheck.IsChecked==false) //start date
                 {
-                    DateTime date_start = VoteSet<int>.MakeDate(hour1.Clockvalue, min1.Clockvalue, sec1.Clockvalue);
-                    DateTime date_stop = VoteSet<int>.MakeDate(hour2.Clockvalue, min2.Clockvalue, sec2.Clockvalue);
-                    Vote newvote = VoteSet<int>.SetValue(date_start, date_stop, new Vote());
-                    using (VoteContext db = new VoteContext())
-                    {
-                        db.phone_vote_question.Add(newvote);
-                        db.SaveChanges();
-
-                    }
-
-                    MessageBox.Show("Успешно!");
-
-                    
 
                 }
-                catch (Exception error)
+
+                if (DstartCheck.IsChecked == false && DstopCheck.IsChecked == true) //stop date
                 {
 
-                    MessageBox.Show($"{ error.Message}/n{error.InnerException.Message}");
-                    
+                }
+
+                if (DstartCheck.IsChecked == true && DstopCheck.IsChecked == true) // two dates
+                {
 
                 }
 
             }
 
+            if (DstartCheck.IsChecked==true //two dates
+                &&DstopCheck.IsChecked==true
+                &&QCheck.IsChecked==false
+                &&A1Check.IsChecked==false
+                &&A2Check.IsChecked==false
+                &&P1Check.IsChecked==false
+                &&P2Check.IsChecked==false)
+            {
+                SaveDates();
+
+            }
+
+            if (DstartCheck.IsChecked == false // q+2a+2ph
+                && DstopCheck.IsChecked == false
+                && QCheck.IsChecked == true
+                && A1Check.IsChecked == true
+                && A2Check.IsChecked == true
+                && P1Check.IsChecked == true
+                && P2Check.IsChecked == true)
+            {
+
+            }
+
+            if (DstartCheck.IsChecked == true //full
+                && DstopCheck.IsChecked == true
+                && QCheck.IsChecked == true
+                && A1Check.IsChecked == true
+                && A2Check.IsChecked == true
+                && P1Check.IsChecked == true
+                && P2Check.IsChecked == true)
+            {
+
+            }
+
+            
+
+
+        }
+
+        private void SaveDates()
+        {
+            try
+            {
+                ITimeItem hour1 = (ITimeItem)HourPickBox1.SelectedItem;
+                ITimeItem min1 = (ITimeItem)MinPickBox1.SelectedItem;
+                ITimeItem sec1 = (ITimeItem)SecPickBox1.SelectedItem;
+                ITimeItem hour2 = (ITimeItem)HourPick2Box.SelectedItem;
+                ITimeItem min2 = (ITimeItem)MinPickBox2.SelectedItem;
+                ITimeItem sec2 = (ITimeItem)SecPickBox2.SelectedItem;
+
+                DateTime date_start = VoteSet.MakeDate(hour1.Clockvalue, min1.Clockvalue, sec1.Clockvalue);
+                DateTime date_stop = VoteSet.MakeDate(hour2.Clockvalue, min2.Clockvalue, sec2.Clockvalue);
+                Vote newvote = VoteSet.SetValue(date_start, date_stop, new Vote());
+                using (VoteContext db = new VoteContext())
+                {
+                    db.phone_vote_question.Add(newvote);
+                    db.SaveChanges();
+
+                }
+
+                MessageBox.Show("Успешно!");
 
 
 
+            }
+            catch (Exception error)
+            {
+
+                MessageBox.Show($"{error.Message}/n{error.InnerException.Message}");
+
+
+            }
         }
 
         private void TestConnBut_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            using (VoteContext db = new VoteContext())
+            bool state = SaveDataContext.CheckConn();
+            if (state)
             {
-                bool con = db.CheckConn();
+                TestConnBut.Source = ElementsAction.SetSource(state);
 
-                TestConnBut.Source = SetSource(con);
+                MessageBox.Show("Подключение есть");
 
+            }
+            else
+            {
+                TestConnBut.Source = ElementsAction.SetSource(state);
+
+                MessageBox.Show("Подключения нет");
 
             }
         }
 
-
-        private void QCheck_Checked(object sender, RoutedEventArgs e)
+        private void AddField(object sender, RoutedEventArgs e)
         {
-            
-        }
-
-        private void A1Check_Checked(object sender, RoutedEventArgs e)
-        {
+            ElementsAction.CheckedAction(true, sender,MainGrid);
 
         }
 
-        private void A2Check_Checked(object sender, RoutedEventArgs e)
+        private void RemoveField(object sender,RoutedEventArgs e)
         {
+            ElementsAction.CheckedAction(false, sender, MainGrid);
 
         }
 
-        private void DstartCheck_Checked(object sender, RoutedEventArgs e)
-        {
 
-        }
-
-        private void DstopCheck_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void P1Check_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void P2Check_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

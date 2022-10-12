@@ -116,7 +116,7 @@
     </Style>
     
     <Style x:Key="MyComboBox" TargetType="ComboBox" BasedOn="{StaticResource TextStyle}">
-        <Setter Property="IsEditable" Value="True"/>
+        <!--<Setter Property="IsEditable" Value="True"/>-->
         <Setter Property="ItemsControl.Height" Value="40"/>
         <Setter Property="ItemsControl.Width" Value="60"/>
         <Setter Property="ItemsControl.HorizontalAlignment" Value="Center"/>
@@ -151,9 +151,6 @@
         <Setter Property="IsChecked" Value="true"/>
     </Style>
 
-    <Style x:Key="DisabledStyle">
-        <Setter Property="ItemsControl.Background" Value="Gray"/>
-    </Style>
 
 
 

@@ -13,7 +13,7 @@
     <Window.Resources>
         <ResourceDictionary Source="PickerDictionary.xaml"/>
     </Window.Resources>
-    <Grid>
+    <Grid x:Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
@@ -47,7 +47,9 @@
                   Grid.Row="0" 
                   Grid.Column="0" 
                   Style="{DynamicResource Check}"
-                  Checked="QCheck_Checked">
+                  Checked="AddField"
+                  Unchecked="RemoveField">
+                  
             
         </CheckBox>
        
@@ -71,7 +73,9 @@
                   Grid.Row="1"
                   Grid.Column="0"
                   Style="{DynamicResource Check}"
-                  Checked="A1Check_Checked">
+                  Checked="AddField"
+                  Unchecked="RemoveField">
+            
             
         </CheckBox>
         
@@ -95,7 +99,8 @@
                   Grid.Row="2"
                   Grid.Column="0"
                   Style="{DynamicResource Check}"
-                  Checked="A2Check_Checked">
+                  Checked="AddField"
+                  Unchecked="RemoveField">
             
         </CheckBox>
 
@@ -148,7 +153,8 @@
                   Grid.Row="6"
                   Grid.Column="0"
                   Style="{DynamicResource Check}"
-                  Checked="DstartCheck_Checked">
+                  Checked="AddField"
+                  Unchecked="RemoveField">
             
         </CheckBox>
 
@@ -211,7 +217,8 @@
                   Grid.Row="10"
                   Grid.Column="0"
                   Style="{DynamicResource Check}"
-                  Checked="DstopCheck_Checked">
+                  Checked="AddField"
+                  Unchecked="RemoveField">
             
         </CheckBox>
         
@@ -243,7 +250,8 @@
                   Grid.Row="12"
                   Grid.Column="0"
                   Style="{DynamicResource Check}"
-                  Checked="P1Check_Checked">
+                  Checked="AddField"
+                  Unchecked="RemoveField">
             
         </CheckBox>
         
@@ -266,7 +274,8 @@
                   Grid.Row="13"
                   Grid.Column="0"
                   Style="{DynamicResource Check}"
-                  Checked="P2Check_Checked">
+                  Checked="AddField"
+                  Unchecked="RemoveField">
             
         </CheckBox>
         
