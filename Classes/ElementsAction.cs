@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using System.Windows;
 using System.Windows.Controls;
@@ -37,7 +33,7 @@ namespace Picker.Classes
                                             "Resources/button red.png");
                 bitmap.UriSource = new Uri(uri);
 
-                MessageBox.Show("Подключения нет");
+               
             }
 
             bitmap.EndInit();
