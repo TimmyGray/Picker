@@ -162,7 +162,8 @@
                   Grid.Row="6"
                   Grid.Column="1"
                   Style="{DynamicResource MyComboBox}"
-                  ItemTemplate="{DynamicResource Item}">
+                  ItemTemplate="{DynamicResource Item}"
+                  SelectionChanged="TimeChanged">
 
 
         </ComboBox>
@@ -171,7 +172,8 @@
                   Grid.Row="6"
                   Grid.Column="2"
                   Style="{DynamicResource MyComboBox}"
-                  ItemTemplate="{DynamicResource Item}">
+                  ItemTemplate="{DynamicResource Item}"
+                   SelectionChanged="TimeChanged">
 
         </ComboBox>
         
@@ -179,7 +181,8 @@
                   Grid.Row="6"
                   Grid.Column="3"
                   Style="{DynamicResource MyComboBox}"
-                  ItemTemplate="{DynamicResource Item}">
+                  ItemTemplate="{DynamicResource Item}"
+                   SelectionChanged="TimeChanged">
 
         </ComboBox>
 
@@ -226,7 +229,8 @@
                   Grid.Row="10"
                   Grid.Column="1"
                   Style="{DynamicResource MyComboBox}"
-                  ItemTemplate="{DynamicResource Item}">
+                  ItemTemplate="{DynamicResource Item}"
+                   SelectionChanged="TimeChanged">
 
         </ComboBox>
         
@@ -234,7 +238,8 @@
                   Grid.Row="10"
                   Grid.Column="2"
                   Style="{DynamicResource MyComboBox}"
-                  ItemTemplate="{DynamicResource Item}">
+                  ItemTemplate="{DynamicResource Item}"
+                   SelectionChanged="TimeChanged">
 
         </ComboBox>
         
@@ -242,7 +247,8 @@
                   Grid.Row="10"
                   Grid.Column="3"
                   Style="{DynamicResource MyComboBox}"
-                  ItemTemplate="{DynamicResource Item}">
+                  ItemTemplate="{DynamicResource Item}"
+                   SelectionChanged="TimeChanged">
 
         </ComboBox>
 

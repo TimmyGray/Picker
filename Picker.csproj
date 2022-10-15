@@ -22,7 +22,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="button green.png" />
     <None Remove="picker.ico" />
     <None Remove="Resources\button green.png" />
   </ItemGroup>
@@ -40,11 +39,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\libs\Pickerlib\Pickerlib.csproj" />
+    <ProjectReference Include="..\Pickerlib\Pickerlib.csproj" />
   </ItemGroup>
 
+  <!--<ItemGroup>
+    <ProjectReference Include="..\libs\Pickerlib\Pickerlib.csproj" />
+  </ItemGroup>-->
+
   <ItemGroup>
-    <Resource Include="button green.png" />
     <Resource Include="picker.ico" />
   </ItemGroup>
 

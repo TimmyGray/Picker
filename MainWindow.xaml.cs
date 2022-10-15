@@ -28,41 +28,7 @@ namespace Picker
     public partial class MainWindow : Window
     {
         ClockContext<ITimeItem> data;
-
-        
-
-        private string SetFieldValue(bool? check, TextBox element)
-        {
-            
-            if (check==true)
-            {
-
-                return element.Text;
-               
-                        
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        private  ITimeItem SetFieldValue(bool? check, ComboBox element)
-        {
-
-            if (check == true)
-            {
-
-                return (ITimeItem)element.SelectedItem;
-
-
-            }
-            else
-            {
-                return null;
-            }
-        }
-
+        bool rightregion = false;
 
         public MainWindow()
         {
@@ -84,12 +50,21 @@ namespace Picker
 
         private void SaveBut_Click(object sender, RoutedEventArgs e)
         {
-            string question = SetFieldValue(QCheck.IsChecked,QuestionBox);
-            string answer1 = SetFieldValue(A1Check.IsChecked,Ans1Box);
-            string answer2 = SetFieldValue(A2Check.IsChecked,Ans2Box);
-            string phone1 = SetFieldValue(P1Check.IsChecked,Phone1Box);
-            string phone2 = SetFieldValue(P2Check.IsChecked,Phone2Box);
-
+            string question = ElementsAction.SetFieldValue(QCheck.IsChecked,QuestionBox);
+            string answer1 = ElementsAction.SetFieldValue(A1Check.IsChecked,Ans1Box);
+            string answer2 = ElementsAction.SetFieldValue(A2Check.IsChecked,Ans2Box);
+            string phone1 = ElementsAction.SetFieldValue(P1Check.IsChecked,Phone1Box);
+            string phone2 = ElementsAction.SetFieldValue(P2Check.IsChecked,Phone2Box);
+            
+            ITimeItem hour1 = ElementsAction.SetFieldValue(DstartCheck.IsChecked,HourPickBox1);
+            ITimeItem min1 = ElementsAction.SetFieldValue(DstartCheck.IsChecked,MinPickBox1);
+            ITimeItem sec1 = ElementsAction.SetFieldValue(DstartCheck.IsChecked,SecPickBox1);
+            ITimeItem hour2 = ElementsAction.SetFieldValue(DstopCheck.IsChecked,HourPick2Box);
+            ITimeItem min2 = ElementsAction.SetFieldValue(DstopCheck.IsChecked, MinPickBox2);
+            ITimeItem sec2 = ElementsAction.SetFieldValue(DstopCheck.IsChecked,SecPickBox2);
+            
+            string result = null;
+            
             if (DstartCheck.IsChecked == false      //question
                 && DstopCheck.IsChecked == false
                 && QCheck.IsChecked == true
@@ -99,8 +74,11 @@ namespace Picker
                 && P2Check.IsChecked == false)
             {
 
-                string result = SaveDataContext.SaveData(question);
+                MessageBox.Show("question");
+                result = SaveDataContext.SaveData(question);
+               
                 MessageBox.Show(result);
+                
                 return;
 
             }
@@ -115,44 +93,43 @@ namespace Picker
                 && P1Check.IsChecked == false
                 && P2Check.IsChecked == false)
             {
-                string result = SaveDataContext.SaveData(question, answer1, answer2);
+                result = SaveDataContext.SaveData(question, answer1, answer2);
+                
                 MessageBox.Show(result);
+
+                return;
             }
 
-            if (QCheck.IsChecked == true        //save dates
+            if (QCheck.IsChecked == false       //save dates
                 && A1Check.IsChecked == false
                 && A2Check.IsChecked == false
                 && P1Check.IsChecked == false
                 && P2Check.IsChecked == false)
             {
-                if (DstartCheck.IsChecked==true&&DstopCheck.IsChecked==false) //start date
-                {
 
+
+                if (DstartCheck.IsChecked==true&&DstopCheck.IsChecked==false) //start date (true for date_start)
+                {
+                   result = SaveDataContext.SaveData(hour1, min1, sec1, true);
                 }
 
-                if (DstartCheck.IsChecked == false && DstopCheck.IsChecked == true) //stop date
+                if (DstartCheck.IsChecked == false && DstopCheck.IsChecked == true) //stop date (false for date_stop)
                 {
-
+                   result = SaveDataContext.SaveData(hour2, min2, sec2, false);
                 }
 
                 if (DstartCheck.IsChecked == true && DstopCheck.IsChecked == true) // two dates
                 {
-
+                    
+                    result = SaveDataContext.SaveData(hour1, min1, sec1, hour2, min2, sec2);
                 }
 
-            }
+                MessageBox.Show(result);
 
-            if (DstartCheck.IsChecked==true //two dates
-                &&DstopCheck.IsChecked==true
-                &&QCheck.IsChecked==false
-                &&A1Check.IsChecked==false
-                &&A2Check.IsChecked==false
-                &&P1Check.IsChecked==false
-                &&P2Check.IsChecked==false)
-            {
-                SaveDates();
+                return;
 
             }
+
 
             if (DstartCheck.IsChecked == false // q+2a+2ph
                 && DstopCheck.IsChecked == false
@@ -162,6 +139,11 @@ namespace Picker
                 && P1Check.IsChecked == true
                 && P2Check.IsChecked == true)
             {
+                result = SaveDataContext.SaveData(question, answer1, answer2, phone1, phone2);
+                
+                MessageBox.Show(result);
+
+                return;
 
             }
 
@@ -173,52 +155,22 @@ namespace Picker
                 && P1Check.IsChecked == true
                 && P2Check.IsChecked == true)
             {
+               
+                result = SaveDataContext.SaveData(question, answer1, answer2, hour1, min1, sec1, hour2, min2, sec2, phone1, phone2);
+
+                MessageBox.Show(result);
+
+                return;
 
             }
-
-            
-
 
         }
 
-        private void SaveDates()
-        {
-            try
-            {
-                ITimeItem hour1 = (ITimeItem)HourPickBox1.SelectedItem;
-                ITimeItem min1 = (ITimeItem)MinPickBox1.SelectedItem;
-                ITimeItem sec1 = (ITimeItem)SecPickBox1.SelectedItem;
-                ITimeItem hour2 = (ITimeItem)HourPick2Box.SelectedItem;
-                ITimeItem min2 = (ITimeItem)MinPickBox2.SelectedItem;
-                ITimeItem sec2 = (ITimeItem)SecPickBox2.SelectedItem;
-
-                DateTime date_start = VoteSet.MakeDate(hour1.Clockvalue, min1.Clockvalue, sec1.Clockvalue);
-                DateTime date_stop = VoteSet.MakeDate(hour2.Clockvalue, min2.Clockvalue, sec2.Clockvalue);
-                Vote newvote = VoteSet.SetValue(date_start, date_stop, new Vote());
-                using (VoteContext db = new VoteContext())
-                {
-                    db.phone_vote_question.Add(newvote);
-                    db.SaveChanges();
-
-                }
-
-                MessageBox.Show("Успешно!");
-
-
-
-            }
-            catch (Exception error)
-            {
-
-                MessageBox.Show($"{error.Message}/n{error.InnerException.Message}");
-
-
-            }
-        }
 
         private void TestConnBut_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             bool state = SaveDataContext.CheckConn();
+            
             if (state)
             {
                 TestConnBut.Source = ElementsAction.SetSource(state);
@@ -247,6 +199,13 @@ namespace Picker
 
         }
 
-
+        private void TimeChanged(object sender, SelectionChangedEventArgs e)
+        {
+            rightregion = ElementsAction.MakeRegion(HourPickBox1,MinPickBox1,SecPickBox1,HourPick2Box,MinPickBox2,SecPickBox2);
+            if (!rightregion)
+            {
+                MessageBox.Show("Неправильный интервал времени");
+            }
+        }
     }
 }
