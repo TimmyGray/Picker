@@ -8,13 +8,14 @@
     <ApplicationIcon>Resources\picker.ico</ApplicationIcon>
     <Authors>Timmy</Authors>
     <Product>Picker</Product>
-    <Description>Simple App for save req time in mysqldb</Description>
+    <Description>Simple app for save req fields in mysqldb</Description>
     <PackageIcon>picker.ico</PackageIcon>
-    <PackageReleaseNotes></PackageReleaseNotes>
+    <PackageReleaseNotes>in this release with try to decrypt password  user can see new notification about bad decrypt </PackageReleaseNotes>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <StartupObject>Picker.App</StartupObject>
-    <AssemblyVersion>1.0.0.1</AssemblyVersion>
-    <FileVersion>1.0.0.1</FileVersion>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <FileVersion>1.0.1.0</FileVersion>
+    <PackageTags>picker; mysql; wpf; client</PackageTags>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -39,7 +40,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Pickerlib\Pickerlib.csproj" />
+    <Reference Include="Pickerlib">
+      <HintPath>..\libs\Pickerlib\bin\Release\net6.0-windows7.0\Pickerlib.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <!--<ItemGroup>

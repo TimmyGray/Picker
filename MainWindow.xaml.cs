@@ -29,9 +29,21 @@ namespace Picker
             MinPickBox2.ItemsSource = data.Minitems;
             SecPickBox2.ItemsSource = data.Secitems;
 
-            TestConnBut.Source = ElementsAction.SetSource(SaveDataContext.CheckConn());
-            
-         
+            try
+            {
+                TestConnBut.Source = ElementsAction.SetSource(SaveDataContext.CheckConn());
+
+            }
+            catch (System.Exception e)
+            {
+
+                MessageBox.Show(e.ToString());
+                TestConnBut.Source = ElementsAction.SetSource(false);
+
+
+            }
+
+
         }
 
         private void SaveBut_Click(object sender, RoutedEventArgs e)
@@ -155,7 +167,20 @@ namespace Picker
 
         private void TestConnBut_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            bool state = SaveDataContext.CheckConn();
+            bool state;
+            try
+            {
+                state = SaveDataContext.CheckConn();
+
+            }
+            catch (System.Exception ex)
+            {
+
+                MessageBox.Show(ex.ToString());
+                TestConnBut.Source = ElementsAction.SetSource(false);
+
+                return;
+            }
             
             if (state)
             {
